@@ -1,0 +1,416 @@
+main {
+    flex: 1;
+}
+
+/* Hero section - Estilo modernizado */
+.hero {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.carousel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.carousel-slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.carousel-slide.active {
+  opacity: 1;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 2;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  padding: 2rem;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.hero-content p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+.catalog-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.catalog-card {
+  position: relative;
+  width: 220px;
+  height: 130px;
+  border-radius: 12px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
+}
+
+.catalog-card:hover {
+  transform: scale(1.05);
+}
+
+.catalog-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 1;
+}
+
+.catalog-card span {
+  position: relative;
+  z-index: 2;
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.top-sellers {
+  position: relative;
+  background-image: url('./img/img3.jpeg'); 
+  background-size: cover;
+  background-position: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  overflow: hidden; 
+}
+
+.top-sellers::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.85);
+  z-index: 0;
+}
+
+.top-sellers * {
+  position: relative;
+  z-index: 1;
+}
+
+
+.top-sellers h2 {
+    font-size: 2.2rem;
+    margin-bottom: 2.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.contenedor-top-sellers {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap; /* permite varias filas en escritorio */
+  padding-bottom: 1rem;
+}
+
+/*Tarjetas*/
+.perfume-card {
+  background-color: #fff;
+  width: 200px;
+  height: 190px;
+  flex-shrink: 0;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1rem;
+}
+
+.perfume-card:hover {
+    transform: translateY(-5px);
+}
+
+.perfume-card h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #222;
+}
+
+.perfume-card .marca {
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 0.25rem;
+}
+
+.perfume-card .catalogo-numero {
+    font-size: 0.85rem;
+    color: #777;
+    margin-bottom: 1rem;
+}
+
+.ver-catalogo-btn {
+    display: inline-block;
+    background-color: #222;
+    color: #fff;
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
+
+.ver-catalogo-btn:hover {
+    background-color: #444;
+}
+
+
+/* Secciones - Estilo moderno */
+.section-title {
+    text-align: center;
+    color: #2c3e50;
+    font-size: 2.2rem;
+    margin: 3rem 0 1.5rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+}
+
+/* About & Map section */
+.about-map-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    padding: 3rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 90%;
+}
+
+.about-map-section .content-wrapper {
+    display: flex;
+    width: 100%;
+    gap: 2rem;
+}
+
+.about-map-section .about-us, 
+.about-map-section .map {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.about-map-section .about-us h2 {
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+    color: #2c3e50;
+}
+
+.about-map-section .about-us p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #555;
+    max-width: 80%;
+}
+
+.about-map-section .map iframe {
+    width: 100%;
+    max-width: 500px;
+    aspect-ratio: 1.5/1;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Testimonios section */
+.testimonios {
+    background-image: url('./img/img7.jpeg'); /* ajusta el path según tu estructura */
+    background-size: cover;         /* Hace que la imagen cubra todo el div */
+    background-position: center;    /* Centra la imagen */
+    padding: 4rem 2rem;
+    text-align: center;
+    background-blend-mode: overlay;
+    position: relative;
+}
+
+.testimonios::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.85);
+    z-index: 0;
+}
+
+.testimonios h2 {
+    position: relative;
+    z-index: 1;
+    font-size: 2.2rem;
+    color: #2c3e50;
+    margin-bottom: 2rem;
+}
+
+.contenedor-testimonios {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+.testimonio {
+    background-color: #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 300px;
+    text-align: left;
+    transition: transform 0.3s ease;
+}
+
+.testimonio:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.testimonio p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+.testimonio h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-top: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero-content h2 {
+        font-size: 2rem;
+    }
+    
+    .hero-content p {
+        font-size: 1rem;
+    }
+
+    .catalog-card {
+        width: 120px;
+        height: 80px;
+    }
+    
+    .about-map-section {
+        flex-direction: column;
+    }
+    
+    .about-map-section .content-wrapper {
+        flex-direction: column;
+    }
+    
+    .about-map-section .about-us, 
+    .about-map-section .map {
+        width: 100%;
+        margin-bottom: 2rem;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+
+    .contenedor-top-sellers {
+        flex-wrap: nowrap;               /* no permite que bajen las tarjetas */
+        justify-content: flex-start;     /* alinea a la izquierda */
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch; /* scroll suave en iOS */
+        scrollbar-width: none;            /* Firefox */
+    }
+
+    .contenedor-top-sellers::-webkit-scrollbar {
+        display: none;                    /* Chrome, Safari, Opera */
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content {
+        padding: 1.5rem;
+        width: 90%;
+    }
+    
+    .hero-content h2 {
+        font-size: 1.6rem;
+    }
+    
+    .testimonio {
+        max-width: 100%;
+    }
+}

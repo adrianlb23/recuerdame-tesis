@@ -1,0 +1,340 @@
+/* ===========================
+   Design Tokens (Variables)
+   =========================== */
+:root {
+  /* Fonts */
+  --font-sans: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-display: 'Roboto Slab', serif;
+
+  /* Colors */
+  --color-bg: #f8f9fa;
+  --color-text: #333;
+  --color-text-muted: #666;
+  --color-muted: #ececec;
+  --color-white: #fff;
+
+  --header-grad-start: #2c3e50;
+  --header-grad-end: #1a1a2e;
+
+  --accent-grad-start: #6a11cb;
+  --accent-grad-end: #2575fc;
+
+  --footer-bg: #2c3e50;
+
+  /* Effects */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 5px 10px rgba(0, 0, 0, 0.2);
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  /* Spacing */
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 1.5rem;
+  --space-4: 2rem;
+
+  /* Typo scale */
+  --fs-sm: 0.9rem;
+  --fs-base: 1rem;
+  --fs-md: 1.1rem;
+  --fs-lg: 1.5rem;
+  --fs-xl: 2.2rem;
+
+  /* Z-index */
+  --z-nav: 4;
+
+  /* Breakpoints */
+  --bp-mobile: 400px;
+}
+
+/* ===========================
+   Base
+   =========================== */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap');
+
+html,
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+/* ===========================
+   Header
+   =========================== */
+.modern-header {
+  background: linear-gradient(135deg, var(--header-grad-start) 0%, var(--header-grad-end) 100%);
+  color: var(--color-white);
+  padding: var(--space-2) calc(var(--space-2) + 1rem);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow-md);
+}
+
+.modern-header h1 {
+  margin: 0;
+  font-size: var(--fs-lg);
+  font-weight: 600;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+}
+
+.logo-img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: contain;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.logo-img:hover {
+  transform: scale(1.1);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Título grande reutilizable */
+.modern-title {
+  text-align: center;
+  margin: 1.5rem 0;
+  color: var(--header-grad-start);
+  font-size: var(--fs-xl);
+  font-weight: 700;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+.modern-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(135deg, var(--accent-grad-start) 0%, var(--accent-grad-end) 100%);
+}
+
+/* ===========================
+   Navegación
+   =========================== */
+.nav-list {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  padding: 0;
+  margin: 0;
+}
+.nav-list li {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+.nav-list li:hover {
+  transform: scale(1.1);
+  color: #ddd;
+}
+.nav-list li a {
+  text-decoration: none;
+  color: var(--color-muted);
+}
+.nav-list a.active {
+  color: var(--color-white);
+  text-decoration: underline;
+}
+
+/* Botones de menú (se muestran en mobile) */
+.abrir-menu,
+.cerrar-menu {
+  display: none;
+}
+
+/* ===========================
+   Utilidades / Texto
+   =========================== */
+.parrafo-aclaracion {
+  text-align: center;
+  width: 65%;
+  margin: 0 auto;
+  color: var(--color-text);
+}
+
+/* ===========================
+   Footer
+   =========================== */
+.modern-footer {
+  background: var(--footer-bg);
+  color: var(--color-white);
+  padding: 2rem 0 0;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-3);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-2);
+}
+
+.footer-section h4 {
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+.footer-section h4::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 50px;
+  height: 2px;
+  background: linear-gradient(135deg, var(--accent-grad-start) 0%, var(--accent-grad-end) 100%);
+}
+
+.footer-section p {
+  margin: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.footer-section i {
+  width: 20px;
+  text-align: center;
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+}
+.social-links a {
+  color: var(--color-white);
+  background: rgba(255, 255, 255, 0.1);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+.social-links a:hover {
+  background: linear-gradient(135deg, var(--accent-grad-start) 0%, var(--accent-grad-end) 100%);
+  transform: translateY(-3px);
+}
+
+.footer-bottom {
+  text-align: center;
+  padding: 1.5rem;
+  margin-top: 2rem;
+  background: rgba(0, 0, 0, 0.1);
+  font-size: 0.9rem;
+}
+
+/* ===========================
+   Botonera genérica
+   =========================== */
+.botones {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin: 20px auto;
+  width: 15%;
+}
+
+/* ===========================
+   Legacy / Compat (si no se usa, eliminar)
+   =========================== */
+header {
+  /* Si ya usas .modern-header, puedes borrar esta regla legacy */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem;
+  background-color: #333;
+  max-height: 70px;
+}
+h1 { color: var(--color-muted); }
+
+/* ===========================
+   Mobile (<= 400px)
+   =========================== */
+@media screen and (max-width: var(--bp-mobile)) {
+  .parrafo-aclaracion { font-size: 0.7rem; }
+
+  .logo-img {
+    width: 55px;
+    height: 55px;
+  }
+
+  .modern-header h1 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .abrir-menu,
+  .cerrar-menu {
+    display: block;
+    border: 0;
+    font-size: 1.25rem;
+    background: transparent;
+    cursor: pointer;
+    color: var(--color-muted);
+  }
+
+  .nav {
+    opacity: 0;
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 1rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #1c1c1c;
+    padding: 2rem;
+    box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.5);
+  }
+  .nav.visible {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    z-index: var(--z-nav);
+  }
+
+  .nav-list {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  .nav-list li a {
+    color: var(--color-muted);
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr;
+  }
+
+  .social-icons a {
+    font-size: 28px;
+  }
+}
