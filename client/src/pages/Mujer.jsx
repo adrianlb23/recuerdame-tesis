@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import "../styles/Catalogo.css";
 import "../styles/index.css";
 
@@ -96,14 +97,16 @@ export default function Mujer() {
       </button>
     </div>
     <div className="action-buttons">
-      <button className="btn-secondary" onclick="location.href='/index.html'">
-        <i className="fas fa-home" /> Inicio
+      <button className="btn-secondary">
+        <Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <i className="fas fa-home" /> Inicio
+        </Link>
       </button>
-      <button
-        className="btn-primary"
-        onclick="location.href='../precios/precios.html'"
-      >
-        <i className="fas fa-tags" /> Ver precios
+      
+      <button className="btn-primary">
+        <Link to="/precios" style={{ textDecoration: 'none', color: 'inherit' }}>
+          <i className="fas fa-tags" /> Ver precios
+        </Link>
       </button>
     </div>
     <section className="perfume-grid" id="perfume-grid">

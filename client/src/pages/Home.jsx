@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import "../styles/Home.css";
 import "../styles/index.css";
 
@@ -48,30 +49,30 @@ export default function Home() {
               Explora nuestro universo olfativo y encuentra tu esencia perfecta
             </p>
             <div className="catalog-cards">
-              <a
-                href="../catalogos/hombre.html"
+              <Link
+                to="/hombre"
                 className="catalog-card"
                 style={{ backgroundImage: 'url("/img/hombre.jpg")' }}
               >
                 <div className="catalog-overlay" />
                 <span>Hombre</span>
-              </a>
-              <a
-                href="../catalogos/mujer.html"
+              </Link>
+              <Link
+                to="/mujer"
                 className="catalog-card"
                 style={{ backgroundImage: 'url("/img/mujer.jpg")' }}
               >
                 <div className="catalog-overlay" />
                 <span>Mujer</span>
-              </a>
-              <a
-                href="../catalogos/nicho.html"
+              </Link>
+              <Link
+                to="/nicho"
                 className="catalog-card"
                 style={{ backgroundImage: 'url("/img/nicho.jpg")' }}
               >
                 <div className="catalog-overlay" />
                 <span>Nicho</span>
-              </a>
+              </Link>
             </div>
           </div>
         </section>

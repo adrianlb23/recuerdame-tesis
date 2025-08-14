@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
-import "../styles/index.css"; // Ajusta la ruta si es necesario
-import logo from "../assets/logo.png"; // Asegúrate de que la ruta sea correcta
+import { Link } from "react-router-dom";
+import "../styles/index.css";
+import logo from "../assets/logo.png";
 
 export default function Navbar() {
   const navRef = useRef(null);
@@ -37,12 +38,12 @@ export default function Navbar() {
           <i className="fas fa-times" />
         </button>
         <ul className="nav-list">
-          <li><a href="/catalogos/hombre.html">Masculino</a></li>
-          <li><a href="/catalogos/mujer.html">Femenino</a></li>
-          <li><a href="/catalogos/nicho.html">Nicho</a></li>
-          <li><a href="/precios/precios.html">Precios</a></li>
-          <li><a href="/promociones/promociones.html">Novedades</a></li>
-          <li><a href="">Recomendador</a></li>
+          <li><Link to="/hombre">Masculino</Link></li>
+          <li><Link to="/mujer">Femenino</Link></li>
+          <li><Link to="/nicho">Nicho</Link></li>
+          <li><Link to="/precios">Precios</Link></li>
+          <li><Link to="/promociones">Novedades</Link></li>
+          <li><Link to="/recomendador">Recomendador</Link></li>
         </ul>
       </nav>
     </header>
