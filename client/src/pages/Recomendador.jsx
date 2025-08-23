@@ -10,10 +10,10 @@ export default function Recomendador() {
   <main className="modern-main">
     <div className="recomendador-container">
       <section className="hero-section">
-        <h1 className="modern-title">Recomendador de Perfumes por IA</h1>
+        <h1 className="modern-title">Recomendador de Perfumes</h1>
         <p className="hero-description">
           Responde unas preguntas y cuéntanos tu estilo. Te sugeriremos
-          fragancias según ocasión, clima y edad.
+          fragancias según ocasión, clima y tu edad.
         </p>
       </section>
       {/* Tarjeta con el formulario */}
