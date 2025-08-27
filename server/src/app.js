@@ -14,7 +14,6 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
-// ✅ monta primero nicho para evitar sombras (o usa la regex en normal.js)
 app.use('/api', nichoRoutes);
 app.use('/api', normalRoutes);
 

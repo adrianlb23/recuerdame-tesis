@@ -4,11 +4,10 @@ import { PerfumeNicho } from '../models/nicho.js';
 // GET /api/catalogo/nicho  (?ultimos=10 opcional)
 export const listarCatalogo = async (req, res) => {
   try {
-    let consulta = PerfumeNicho.find({});
+    let consulta = PerfumeNicho.find({}).sort({ numero: 1 });
     const ultimos = Number(req.query.ultimos);
 
     if (!Number.isNaN(ultimos) && ultimos > 0) {
-      // "Últimos" por _id descendente (orden de inserción)
       consulta = consulta.sort({ _id: -1 }).limit(ultimos);
     }
 

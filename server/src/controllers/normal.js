@@ -21,7 +21,7 @@ export const listarCatalogo = async (req, res) => {
   try {
     const Model = pickModel(req.params.catalogo);
 
-    let consulta = Model.find({});
+    let consulta = Model.find({}).sort({ numero: 1 });
     const ultimos = Number(req.query.ultimos);
     if (!Number.isNaN(ultimos) && ultimos > 0) {
       consulta = consulta.sort({ _id: -1 }).limit(ultimos);
