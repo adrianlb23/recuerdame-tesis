@@ -6,6 +6,7 @@ import cors from 'cors';
 import health from './routes/health.js';
 import normalRoutes from './routes/normal.js';
 import nichoRoutes from './routes/nicho.js';
+import authRoutes from "./routes/auth.js";
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(morgan('dev'));
 
 app.use('/api', nichoRoutes);
 app.use('/api', normalRoutes);
+app.use('/api/auth', authRoutes);
 
 app.use('/', health);
 

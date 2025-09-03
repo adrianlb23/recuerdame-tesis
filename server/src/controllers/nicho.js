@@ -1,7 +1,6 @@
-// controllers/nicho.js
 import { PerfumeNicho } from '../models/nicho.js';
 
-// GET /api/catalogo/nicho  (?ultimos=10 opcional)
+// GET /api/catalogo/nicho
 export const listarCatalogo = async (req, res) => {
   try {
     let consulta = PerfumeNicho.find({}).sort({ numero: 1 });

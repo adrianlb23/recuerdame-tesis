@@ -1,4 +1,3 @@
-// controllers/normal.js
 import { PerfumeHombre, PerfumeMujer } from '../models/normal.js';
 
 const registry = {

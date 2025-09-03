@@ -9,14 +9,12 @@ export default function Hombre() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // UI
   const [search, setSearch] = useState("");
   const [aroma, setAroma] = useState("");
 
   useEffect(() => {
     (async () => {
       try {
-        // Puedes usar ?ultimos=10 si quieres limitar: /api/catalogo/hombre?ultimos=10
         const { data } = await api.get("/api/catalogo/hombre");
         setPerfumes(Array.isArray(data?.resultado) ? data.resultado : []);
       } catch (e) {
@@ -34,7 +32,6 @@ export default function Hombre() {
   const filtrados = useMemo(() => {
     let list = perfumes;
 
-    // Búsqueda por nombre / marca / tipo / tipo2
     const q = norm(search);
     if (q) {
       list = list.filter((p) => {
@@ -43,7 +40,6 @@ export default function Hombre() {
       });
     }
 
-    // Radio por familia olfativa (compara con tipo/tipo2)
     const sel = norm(aroma);
     if (sel) {
       list = list.filter((p) => norm(p.tipo) === sel || norm(p.tipo2) === sel);
@@ -75,7 +71,6 @@ export default function Hombre() {
         </p>
       </div>
 
-      {/* Búsqueda */}
       <section className="search-section">
         <div className="search-container">
           <div className="search-input-wrapper">
@@ -91,7 +86,6 @@ export default function Hombre() {
         </div>
       </section>
 
-      {/* Filtros */}
       <section className="filter-section">
         <div className="filter-header">
           <h3>Filtrar por familia olfativa</h3>
@@ -143,7 +137,6 @@ export default function Hombre() {
         </button>
       </div>
 
-      {/* Navegación secundaria */}
       <div className="action-buttons">
         <button className="btn-secondary" type="button">
           <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
@@ -157,7 +150,6 @@ export default function Hombre() {
         </button>
       </div>
 
-      {/* Estados */}
       {loading && <p style={{ textAlign: "center" }}>Cargando catálogo...</p>}
       {error && !loading && (
         <p style={{ textAlign: "center", color: "crimson" }}>{error}</p>
@@ -166,11 +158,9 @@ export default function Hombre() {
         <p style={{ textAlign: "center" }}>No hay perfumes para mostrar.</p>
       )}
 
-      {/* Grid de tarjetas */}
       <section className="perfume-grid" id="perfume-grid">
         {filtrados.map((p) => (
           <article className="perfume-card" key={p._id || p.numero}>
-            {/* Header con número y nombre */}
             <div className="card-header">
               <div className="perfume-number">{p.numero ?? "—"}</div>
               <h3 className="perfume-name" title={p.nombre ?? "Sin nombre"}>
@@ -178,21 +168,17 @@ export default function Hombre() {
               </h3>
             </div>
 
-            {/* Marca */}
             <div className="perfume-house" title={p.marca ?? "—"}>
               {p.marca ?? "—"}
             </div>
 
-            {/* Tipos olfativos */}
             <div className="perfume-notes">
               <span className="note-tag" title={p.tipo ?? "—"}>{p.tipo ?? "—"}</span>
               {p.tipo2 && <span className="note-tag" title={p.tipo2}>{p.tipo2}</span>}
             </div>
 
-            {/* Línea divisoria */}
             <div className="card-divider"></div>
 
-            {/* Botón de detalles */}
             <div className="card-footer">
               {p.url ? (
                 <a
