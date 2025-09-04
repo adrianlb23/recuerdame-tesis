@@ -1,4 +1,4 @@
-// src/routes/auth.js
+// Inicio de sesión admin
 import { Router } from "express";
 import { login, logout, me } from "../controllers/auth.js";
 

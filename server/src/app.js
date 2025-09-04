@@ -7,6 +7,7 @@ import health from './routes/health.js';
 import normalRoutes from './routes/normal.js';
 import nichoRoutes from './routes/nicho.js';
 import authRoutes from "./routes/auth.js";
+import adminRoutes from "./routes/admin.js";
 
 const app = express();
 
@@ -18,6 +19,7 @@ app.use(morgan('dev'));
 app.use('/api', nichoRoutes);
 app.use('/api', normalRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/admin', adminRoutes);
 
 app.use('/', health);
 
