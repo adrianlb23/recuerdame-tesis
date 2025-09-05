@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 
+//Función para proteger rutas que requieren autenticación de administrador
 export function requireAuth(req, res, next) {
   try {
     const auth = req.headers.authorization || "";

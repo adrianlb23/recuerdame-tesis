@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaInstagram } from "react-icons/fa";
-import "../styles/index.css";
+import "../styles/Footer.css";
 
 export default function Footer() {
   return (

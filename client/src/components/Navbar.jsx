@@ -1,66 +1,133 @@
-import React, { useRef } from "react";
-import { Link } from "react-router-dom";
+import React, { useRef, useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { FaSignOutAlt, FaSignInAlt } from "react-icons/fa";
+import api from "../services/api";
+import LoginModal from "./LoginModal";
 import "../styles/Navbar.css";
 import logo from "../assets/logo.png";
 
 export default function Navbar() {
+  const [isAuth, setIsAuth] = useState(false);
+  const [openLogin, setOpenLogin] = useState(false);
   const navRef = useRef(null);
   const overlayRef = useRef(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsAuth(Boolean(token));
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    delete api.defaults.headers.common.Authorization;
+    window.location.reload();
+  };
 
   const toggleMenu = () => {
-    navRef.current.classList.toggle("visible");
-    overlayRef.current.classList.toggle("visible");
+    navRef.current?.classList.toggle("visible");
+    overlayRef.current?.classList.toggle("visible");
     document.body.classList.toggle("no-scroll");
   };
 
   const closeMenu = () => {
-    navRef.current.classList.remove("visible");
-    overlayRef.current.classList.remove("visible");
+    navRef.current?.classList.remove("visible");
+    overlayRef.current?.classList.remove("visible");
     document.body.classList.remove("no-scroll");
   };
 
   return (
     <>
       <header className="navbar">
-        <div className="navbar__logo-container" onClick={() => window.location.href = "/"}>
-          <img className="navbar__logo-img" src={logo} alt="Logo" />
-          <h1 className="navbar__title">Perfumería Recuérdame</h1>
+        <div className="navbar__logo-container">
+          <button
+            className="navbar__brand"
+            onClick={() => navigate("/")}
+            aria-label="Ir al inicio"
+          >
+            <img className="navbar__logo-img" src={logo} alt="Logo" />
+            <h1 className="navbar__title">Perfumería Recuérdame</h1>
+          </button>
+
+          {/* 👇 Mostrar login/logout según estado */}
+          {isAuth ? (
+            <button
+              className="logout-btn"
+              onClick={handleLogout}
+              title="Cerrar sesión"
+              aria-label="Cerrar sesión"
+            >
+              <FaSignOutAlt />
+            </button>
+          ) : (
+            <button
+              className="login-btn"
+              onClick={() => setOpenLogin(true)}
+              title="Iniciar sesión"
+              aria-label="Iniciar sesión"
+            >
+              <FaSignInAlt />
+            </button>
+          )}
+
+          <button
+            className="navbar__hamburger"
+            onClick={toggleMenu}
+            aria-label="Abrir menú"
+          >
+            <FontAwesomeIcon icon={faBars} />
+          </button>
         </div>
 
-        <button className="navbar__hamburger" onClick={toggleMenu}>
-          <FontAwesomeIcon icon={faBars} />
-        </button>
+        <div className="navbar__overlay" ref={overlayRef} onClick={closeMenu} />
 
-        <div className="navbar__overlay" ref={overlayRef} onClick={closeMenu}></div>
-
-        <nav className="navbar__menu" ref={navRef}>
-          <button className="navbar__close-btn" onClick={closeMenu}>
+        <nav className="navbar__menu" ref={navRef} aria-label="Navegación principal">
+          <button className="navbar__close-btn" onClick={closeMenu} aria-label="Cerrar menú">
             <FontAwesomeIcon icon={faTimes} />
           </button>
           <ul className="navbar__list">
             <li className="navbar__item">
-              <Link to="/hombre" className="navbar__link" onClick={closeMenu}>Masculino</Link>
+              <Link to="/hombre" className="navbar__link" onClick={closeMenu}>
+                Masculino
+              </Link>
             </li>
             <li className="navbar__item">
-              <Link to="/mujer" className="navbar__link" onClick={closeMenu}>Femenino</Link>
+              <Link to="/mujer" className="navbar__link" onClick={closeMenu}>
+                Femenino
+              </Link>
             </li>
             <li className="navbar__item">
-              <Link to="/nicho" className="navbar__link" onClick={closeMenu}>Nicho</Link>
+              <Link to="/nicho" className="navbar__link" onClick={closeMenu}>
+                Nicho
+              </Link>
             </li>
             <li className="navbar__item">
-              <Link to="/precios" className="navbar__link" onClick={closeMenu}>Precios</Link>
+              <Link to="/precios" className="navbar__link" onClick={closeMenu}>
+                Precios
+              </Link>
             </li>
             <li className="navbar__item">
-              <Link to="/promociones" className="navbar__link" onClick={closeMenu}>Novedades</Link>
+              <Link to="/promociones" className="navbar__link" onClick={closeMenu}>
+                Novedades
+              </Link>
             </li>
             <li className="navbar__item">
-              <Link to="/recomendador" className="navbar__link" onClick={closeMenu}>Recomendador</Link>
+              <Link to="/recomendador" className="navbar__link" onClick={closeMenu}>
+                Recomendador
+              </Link>
             </li>
           </ul>
         </nav>
       </header>
+
+      {/* Modal de login */}
+      <LoginModal
+        open={openLogin}
+        onClose={() => setOpenLogin(false)}
+        onSuccess={() => setIsAuth(true)}
+      />
     </>
   );
 }

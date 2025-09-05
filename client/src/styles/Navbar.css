@@ -144,6 +144,40 @@
   width: 100%;
 }
 
+.navbar__logo-container {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+}
+
+.navbar__brand {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+
+.login-btn,
+.logout-btn {
+  border: none;
+  background: transparent;
+  font-size: 1.4rem;
+  color: #ffffff;
+  cursor: pointer;
+  margin-left: 1rem;
+  transition: color 0.2s ease;
+}
+
+.login-btn:hover,
+.logout-btn:hover {
+  color: #6a11cb;
+}
+.logout-btn:hover { color: #ff1744; }
+
+
 /* Mobile Styles */
 @media (max-width: 768px) {
   .navbar__menu {
