@@ -427,6 +427,58 @@
   font-weight: bold;
 }
 
+/* Barra superior solo admin */
+.admin-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0.5rem 0 1rem;
+}
+.admin-add-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  border: 1px solid #6a11cb;
+  background: transparent;
+  color: #6a11cb;
+  padding: .45rem .8rem;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.admin-add-btn:hover {
+  background: #6a11cb;
+  color: #fff;
+}
+
+/* Acciones admin dentro de tarjetas */
+.perfume-card {
+  position: relative; /* necesario para posicionar las acciones */
+}
+.card-admin-actions {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  gap: .35rem;
+}
+.admin-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.9);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform .15s ease, background .2s ease;
+  font-size: 0.95rem;
+}
+.admin-icon-btn:hover { transform: translateY(-1px); }
+.admin-icon-btn.edit { color: #1976d2; }
+.admin-icon-btn.delete { color: #c62828; }
+
+
 /* Responsive design - Versión modificada */
 @media (max-width: 768px) {
   .modern-header {

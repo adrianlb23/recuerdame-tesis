@@ -1,22 +1,49 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import api from "../services/api";
 import "../styles/Catalogo.css";
 import "../styles/index.css";
+import { FaTrashAlt, FaEdit, FaPlus } from "react-icons/fa";
+import AdminAddPerfume from "../components/AdminAdd";
+import AdminEditPerfume from "../components/AdminEdit";
 
 export default function Hombre() {
   const [perfumes, setPerfumes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
   const [search, setSearch] = useState("");
   const [aroma, setAroma] = useState("");
+  const [isAuth, setIsAuth] = useState(false);
 
+  // Modales admin
+  const [openAdd, setOpenAdd] = useState(false);
+  const [openEdit, setOpenEdit] = useState(false);
+  const [selected, setSelected] = useState(null);
+
+  // Auth
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) return setIsAuth(false);
+        api.defaults.headers.common.Authorization = `Bearer ${token}`;
+        await api.get("/api/auth/me");
+        setIsAuth(true);
+      } catch {
+        setIsAuth(false);
+      }
+    };
+    checkAuth();
+  }, []);
+
+  // Fetch catálogo
   useEffect(() => {
     (async () => {
       try {
         const { data } = await api.get("/api/catalogo/hombre");
-        setPerfumes(Array.isArray(data?.resultado) ? data.resultado : []);
+        const lista = Array.isArray(data?.resultado) ? data.resultado : [];
+        lista.sort((a, b) => (a?.numero ?? 0) - (b?.numero ?? 0));
+        setPerfumes(lista);
       } catch (e) {
         console.error(e);
         setError("No se pudo cargar el catálogo.");
@@ -31,7 +58,6 @@ export default function Hombre() {
 
   const filtrados = useMemo(() => {
     let list = perfumes;
-
     const q = norm(search);
     if (q) {
       list = list.filter((p) => {
@@ -39,12 +65,10 @@ export default function Hombre() {
         return fields.some((f) => f.includes(q));
       });
     }
-
     const sel = norm(aroma);
     if (sel) {
       list = list.filter((p) => norm(p.tipo) === sel || norm(p.tipo2) === sel);
     }
-
     return list;
   }, [perfumes, search, aroma]);
 
@@ -52,6 +76,26 @@ export default function Hombre() {
     setSearch("");
     setAroma("");
   };
+
+  // Admin: borrar, editar, agregar
+  const handleDelete = async (numero) => {
+    const ok = window.confirm(`¿Borrar el perfume #${numero}?`);
+    if (!ok) return;
+    try {
+      await api.delete(`/api/admin/catalogo/hombre/${numero}`);
+      setPerfumes((prev) => prev.filter((p) => p.numero !== numero));
+    } catch (e) {
+      console.error(e);
+      alert("No se pudo borrar. Verifica autenticación y backend.");
+    }
+  };
+
+  const handleEditOpen = (perf) => {
+    setSelected(perf);
+    setOpenEdit(true);
+  };
+
+  const handleAddOpen = () => setOpenAdd(true);
 
   return (
     <main className="modern-main">
@@ -71,6 +115,7 @@ export default function Hombre() {
         </p>
       </div>
 
+      {/* Búsqueda */}
       <section className="search-section">
         <div className="search-container">
           <div className="search-input-wrapper">
@@ -86,6 +131,7 @@ export default function Hombre() {
         </div>
       </section>
 
+      {/* Filtros */}
       <section className="filter-section">
         <div className="filter-header">
           <h3>Filtrar por familia olfativa</h3>
@@ -98,18 +144,9 @@ export default function Hombre() {
       <div className="filter-options-container" id="filter-options">
         <div className="filter-grid">
           {[
-            "Verde",
-            "Frutal",
-            "Citrico",
-            "Amaderado",
-            "Floral",
-            "Marino",
-            "Aromatico",
-            "Dulce",
-            "Avainillado",
-            "Fresco especiado",
-            "Calido especiado",
-            "Ambarado",
+            "Verde","Frutal","Citrico","Amaderado","Floral","Marino",
+            "Aromatico","Dulce","Avainillado","Fresco especiado",
+            "Calido especiado","Ambarado",
           ].map((opt) => (
             <label className="filter-tag" key={opt}>
               <input
@@ -120,23 +157,20 @@ export default function Hombre() {
                 onChange={(e) => setAroma(e.target.value)}
               />
               <span>
-                {opt === "Citrico"
-                  ? "Cítrico"
-                  : opt === "Aromatico"
-                  ? "Aromático"
-                  : opt === "Calido especiado"
-                  ? "Cálido especiado"
+                {opt === "Citrico" ? "Cítrico"
+                  : opt === "Aromatico" ? "Aromático"
+                  : opt === "Calido especiado" ? "Cálido especiado"
                   : opt}
               </span>
             </label>
           ))}
         </div>
-
         <button className="clear-filters" type="button" onClick={clearFilters}>
           <i className="fas fa-times" /> Limpiar filtros
         </button>
       </div>
 
+      {/* Navegación secundaria */}
       <div className="action-buttons">
         <button className="btn-secondary" type="button">
           <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
@@ -150,14 +184,23 @@ export default function Hombre() {
         </button>
       </div>
 
+      {/* Estados */}
       {loading && <p style={{ textAlign: "center" }}>Cargando catálogo...</p>}
-      {error && !loading && (
-        <p style={{ textAlign: "center", color: "crimson" }}>{error}</p>
-      )}
+      {error && !loading && <p style={{ textAlign: "center", color: "crimson" }}>{error}</p>}
       {!loading && !error && filtrados.length === 0 && (
         <p style={{ textAlign: "center" }}>No hay perfumes para mostrar.</p>
       )}
 
+      {/* 🔐 Admin: Agregar */}
+      {isAuth && (
+        <div className="admin-toolbar">
+          <button className="admin-add-btn" type="button" onClick={handleAddOpen}>
+            <FaPlus /> Agregar perfume
+          </button>
+        </div>
+      )}
+
+      {/* Grid */}
       <section className="perfume-grid" id="perfume-grid">
         {filtrados.map((p) => (
           <article className="perfume-card" key={p._id || p.numero}>
@@ -198,9 +241,52 @@ export default function Hombre() {
                 </button>
               )}
             </div>
+
+            {isAuth && (
+              <div className="card-admin-actions">
+                <button
+                  type="button"
+                  className="admin-icon-btn edit"
+                  title="Editar"
+                  onClick={() => handleEditOpen(p)}
+                >
+                  <FaEdit />
+                </button>
+                <button
+                  type="button"
+                  className="admin-icon-btn delete"
+                  title="Borrar"
+                  onClick={() => handleDelete(p.numero)}
+                >
+                  <FaTrashAlt />
+                </button>
+              </div>
+            )}
           </article>
         ))}
       </section>
+
+      {/* Modales */}
+      <AdminAddPerfume
+        open={openAdd}
+        onClose={() => setOpenAdd(false)}
+        catalog="hombre"
+        onCreated={(nuevo) =>
+          setPerfumes((prev) => [...prev, nuevo].sort((a, b) => a.numero - b.numero))
+        }
+      />
+
+      <AdminEditPerfume
+        open={openEdit}
+        onClose={() => { setOpenEdit(false); setSelected(null); }}
+        catalog="hombre"
+        perfume={selected}
+        onUpdated={(upd) =>
+          setPerfumes((prev) =>
+            prev.map((p) => (p.numero === upd.numero ? upd : p)).sort((a, b) => a.numero - b.numero)
+          )
+        }
+      />
     </main>
   );
 }

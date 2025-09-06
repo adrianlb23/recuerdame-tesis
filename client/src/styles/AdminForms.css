@@ -1,0 +1,103 @@
+/* Backdrop común de modales (reutiliza tu estilo si ya tienes uno) */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  display: grid;
+  place-items: center;
+  z-index: 9999;
+}
+
+/* Tarjeta del formulario */
+.form-modal {
+  width: 100%;
+  max-width: 640px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 24px 60px rgba(0,0,0,.2);
+  overflow: hidden;
+  animation: pop .15s ease-out;
+}
+
+@keyframes pop {
+  from { transform: scale(.98); opacity: .8; }
+  to   { transform: scale(1);   opacity: 1;  }
+}
+
+.form-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 1.25rem; border-bottom: 1px solid #eee;
+}
+.form-header h3 { margin: 0; font-size: 1.15rem; }
+.form-close {
+  background: transparent; border: 0; font-size: 1.1rem; cursor: pointer; color: #444;
+}
+.form-close:hover { color: #000; }
+
+.form-body {
+  padding: 1rem 1.25rem 1.25rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0,1fr));
+  gap: .9rem .8rem;
+}
+
+.form-field {
+  display: grid; gap: .45rem;
+}
+.form-field.-full {
+  grid-column: 1 / -1;
+}
+.form-field > span, .form-field > legend {
+  font-weight: 600; color: #263238; font-size: .95rem;
+}
+.form-field input[type="text"],
+.form-field input[type="number"],
+.form-field input[type="url"],
+.form-field select {
+  border: 1px solid #ddd; border-radius: 10px; padding: .6rem .75rem; font-size: .95rem;
+}
+.form-field input:focus,
+.form-field select:focus {
+  outline: none; border-color: #6a11cb;
+  box-shadow: 0 0 0 2px rgba(106,17,203,.15);
+}
+
+.form-field.checkbox {
+  align-items: center;
+  grid-auto-flow: column;
+  justify-content: start;
+}
+
+.chips { display: flex; flex-wrap: wrap; gap: .45rem; }
+.chip {
+  border: 1px solid #bbb; background: #fff; color: #333;
+  padding: .25rem .6rem; border-radius: 999px; cursor: pointer; font-weight: 600;
+}
+.chip.active {
+  background: #e3f2fd; color: #1976d2; border-color: #90caf9;
+}
+
+.form-error {
+  margin-top: .5rem; color: crimson; font-weight: 600;
+}
+
+.form-actions {
+  display: flex; gap: .6rem; justify-content: flex-end; margin-top: 1rem;
+}
+.btn-primary {
+  border: 0; background: linear-gradient(135deg,#6a11cb 0%,#2575fc 100%);
+  color: #fff; padding: .6rem 1rem; border-radius: 10px; font-weight: 700; cursor: pointer;
+}
+.btn-primary:disabled { opacity: .7; cursor: not-allowed; }
+.btn-secondary {
+  border: 1px solid #bbb; background: #fff; color: #333;
+  padding: .6rem 1rem; border-radius: 10px; font-weight: 700; cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .form-modal { max-width: 92vw; }
+  .form-grid { grid-template-columns: 1fr; }
+}
