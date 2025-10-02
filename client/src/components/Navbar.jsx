@@ -2,29 +2,13 @@ import React, { useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
-import { FaSignOutAlt, FaSignInAlt } from "react-icons/fa";
-import api from "../services/api";
-import LoginModal from "./LoginModal";
 import "../styles/Navbar.css";
 import logo from "../assets/logo.png";
 
 export default function Navbar() {
-  const [isAuth, setIsAuth] = useState(false);
-  const [openLogin, setOpenLogin] = useState(false);
   const navRef = useRef(null);
   const overlayRef = useRef(null);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsAuth(Boolean(token));
-  }, []);
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    delete api.defaults.headers.common.Authorization;
-    window.location.reload();
-  };
 
   const toggleMenu = () => {
     navRef.current?.classList.toggle("visible");
@@ -50,27 +34,6 @@ export default function Navbar() {
             <img className="navbar__logo-img" src={logo} alt="Logo" />
             <h1 className="navbar__title">Perfumería Recuérdame</h1>
           </button>
-
-          {/* 👇 Mostrar login/logout según estado */}
-          {isAuth ? (
-            <button
-              className="logout-btn"
-              onClick={handleLogout}
-              title="Cerrar sesión"
-              aria-label="Cerrar sesión"
-            >
-              <FaSignOutAlt />
-            </button>
-          ) : (
-            <button
-              className="login-btn"
-              onClick={() => setOpenLogin(true)}
-              title="Iniciar sesión"
-              aria-label="Iniciar sesión"
-            >
-              <FaSignInAlt />
-            </button>
-          )}
 
           <button
             className="navbar__hamburger"
@@ -121,13 +84,6 @@ export default function Navbar() {
           </ul>
         </nav>
       </header>
-
-      {/* Modal de login */}
-      <LoginModal
-        open={openLogin}
-        onClose={() => setOpenLogin(false)}
-        onSuccess={() => setIsAuth(true)}
-      />
     </>
   );
 }

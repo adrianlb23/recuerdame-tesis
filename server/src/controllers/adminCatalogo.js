@@ -82,21 +82,23 @@ export const crearPerfume = async (req, res) => {
     const { catalogo } = req.params;
     const Model = pickModel(catalogo);
 
+    // Validar campos permitidos y requeridos
     let payload = sanitize(catalogo, req.body);
     if (payload.numero == null) return res.status(400).json({ status: "error", mensaje: "numero es requerido" });
     payload.numero = Number(payload.numero);
 
     if (catalogo === "nicho") payload = normalizeNicho(payload);
 
-    // Unicidad por numero
+    // Retornar error si ya existe ese número
     const existe = await Model.findOne({ numero: payload.numero }).lean();
     if (existe) return res.status(409).json({ status: "error", mensaje: "Ya existe ese número" });
 
+    // Crear el documento con el perfume
     const doc = await Model.create(payload);
     return res.status(201).json({ status: "éxito", resultado: doc });
   } catch (e) {
     console.error(e);
-    // manejar posible E11000
+    // Manejar error 11000 de Mongo (duplicado)
     if (e?.code === 11000) {
       return res.status(409).json({ status: "error", mensaje: "Duplicado: número ya existe" });
     }

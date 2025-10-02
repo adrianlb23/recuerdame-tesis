@@ -1,6 +1,3 @@
-/* ===========================
-   Footer
-   =========================== */
 .modern-footer {
   background: var(--footer-bg);
   color: var(--color-white);
@@ -71,7 +68,6 @@
   font-size: 0.9rem;
 }
 
-/* Footer */
 .app-footer {
   display: flex;
   gap: 0.75rem;
@@ -82,3 +78,72 @@
   background: #fafafa;
 }
 
+/* Inicio de sesión */
+.auth-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 0.5rem;
+}
+
+.footer-login-btn,
+.footer-logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--color-white);
+  padding: 0.6rem 1.2rem;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-top: 0.5rem;
+  width: auto;
+}
+
+.footer-login-btn:hover,
+.footer-logout-btn:hover {
+  background: linear-gradient(135deg, var(--accent-grad-start) 0%, var(--accent-grad-end) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-color: transparent;
+}
+
+.footer-login-btn .icon,
+.footer-logout-btn .icon {
+  font-size: 0.9rem;
+}
+
+/* Asegurar que la sección de cuenta tenga la misma estructura que las demás */
+.footer-section:nth-child(3) h4 {
+  margin: 0 0 1rem 0;
+  font-size: 1.1rem;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.footer-section:nth-child(3) h4::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 50px;
+  height: 2px;
+  background: linear-gradient(135deg, var(--accent-grad-start) 0%, var(--accent-grad-end) 100%);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .auth-section {
+    align-items: stretch;
+  }
+  
+  .footer-login-btn,
+  .footer-logout-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

@@ -10,6 +10,25 @@ const ENUMS = {
   edad: ["juvenil", "maduro", "ambos"],
 };
 
+// Tipos por catálogo
+const TIPOS_POR_CATALOGO = {
+  hombre: [
+    "Verde", "Frutal", "Cítrico", "Amaderado", "Floral", "Marino", 
+    "Aromático", "Dulce", "Avainillado", "Fresco especiado", 
+    "Cálido especiado", "Ambarado"
+  ],
+  mujer: [
+    "Verde", "Frutal", "Cítrico", "Amaderado", "Floral", "Floral blanco", 
+    "Atalcado", "Dulce", "Avainillado", "Fresco especiado", 
+    "Cálido especiado", "Ambarado"
+  ],
+  nicho: [
+    "Verde", "Frutal", "Cítrico", "Amaderado", "Floral", "Marino", 
+    "Aromático", "Dulce", "Avainillado", "Fresco especiado", 
+    "Cálido especiado", "Ambarado", "Tabaco"
+  ]
+};
+
 export default function AdminEditPerfume({
   open,
   onClose,
@@ -35,6 +54,16 @@ export default function AdminEditPerfume({
   });
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState("");
+
+  // Obtener tipos disponibles según el catálogo
+  const tiposDisponibles = useMemo(() => {
+    return TIPOS_POR_CATALOGO[catalog] || TIPOS_POR_CATALOGO.hombre;
+  }, [catalog]);
+
+  // Filtrar opciones para tipo2 (excluir el tipo seleccionado)
+  const opcionesTipo2 = useMemo(() => {
+    return tiposDisponibles.filter(tipo => tipo !== form.tipo);
+  }, [tiposDisponibles, form.tipo]);
 
   useEffect(() => {
     if (open && perfume) {
@@ -71,7 +100,12 @@ export default function AdminEditPerfume({
     if (type === "checkbox" && name === "dispo") {
       setForm((f) => ({ ...f, dispo: checked }));
     } else {
-      setForm((f) => ({ ...f, [name]: value }));
+      setForm((f) => ({ 
+        ...f, 
+        [name]: value,
+        // Reset tipo2 si se cambia el tipo principal
+        ...(name === 'tipo' && { tipo2: '' })
+      }));
     }
   };
 
@@ -167,23 +201,32 @@ export default function AdminEditPerfume({
             </label>
 
             <label className="form-field">
-              <span>Tipo</span>
-              <input
-                type="text"
+              <span>Tipo *</span>
+              <select
                 name="tipo"
                 value={form.tipo}
                 onChange={onChange}
-              />
+                required
+              >
+                <option value="">Seleccionar tipo</option>
+                {tiposDisponibles.map((tipo) => (
+                  <option key={tipo} value={tipo}>{tipo}</option>
+                ))}
+              </select>
             </label>
 
             <label className="form-field">
               <span>Tipo 2</span>
-              <input
-                type="text"
+              <select
                 name="tipo2"
                 value={form.tipo2}
                 onChange={onChange}
-              />
+              >
+                <option value="">Ninguno</option>
+                {opcionesTipo2.map((tipo) => (
+                  <option key={tipo} value={tipo}>{tipo}</option>
+                ))}
+              </select>
             </label>
 
             <label className="form-field">
