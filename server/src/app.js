@@ -8,6 +8,7 @@ import normalRoutes from './routes/normal.js';
 import nichoRoutes from './routes/nicho.js';
 import authRoutes from "./routes/auth.js";
 import adminRoutes from "./routes/admin.js";
+import iaRoutes from "./routes/ia.js";
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use('/api', nichoRoutes);
 app.use('/api', normalRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/ia', iaRoutes);
 
 app.use('/', health);
 
