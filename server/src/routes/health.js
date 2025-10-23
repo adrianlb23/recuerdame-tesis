@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 
 const router = Router();
 
+// Ruta de salud del servicio (para pruebas internas)
 router.get('/health', (_req, res) => {
   res.json({ ok: true, service: 'api', time: new Date().toISOString() });
 });

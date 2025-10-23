@@ -12,11 +12,13 @@ import iaRoutes from "./routes/ia.js";
 
 const app = express();
 
+// Uso de dependencias
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
 app.use(morgan('dev'));
 
+// Rutas
 app.use('/api', nichoRoutes);
 app.use('/api', normalRoutes);
 app.use('/api/auth', authRoutes);

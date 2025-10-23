@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
 
-// POST /api/auth/login
+//Endpoint de autenticación
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body || {};
@@ -33,13 +33,13 @@ export const login = async (req, res) => {
   }
 };
 
-// POST /api/auth/logout
+//Función para cerrar sesión
 export const logout = (_req, res) => {
   // Con JWT “stateless”, el logout es client-side (descartar token).
   return res.json({ status: "éxito", mensaje: "Sesión cerrada" });
 };
 
-// GET /api/auth/me
+//Función para info del usuario loggeado por su token, sólo útil para realizar pruebas rápidas
 export const me = (req, res) => {
   try {
     const auth = req.headers.authorization || "";

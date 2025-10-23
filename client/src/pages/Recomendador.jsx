@@ -1,13 +1,14 @@
 import { useState } from "react";
 import "../styles/Recomendador.css";
-import "../styles/index.css";
 import ModalRecomendacion from "../components/ModalRecomendacion"; // Asegúrate de tener el componente creado
 
 export default function Recomendador() {
   // Estados para manejar IA, modal y carga
   const [mensajeIA, setMensajeIA] = useState("");
+  const [catalogoFiltrado, setCatalogoFiltrado] = useState([]); // ✅ nuevo estado
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  
 
   // Función que maneja el envío del formulario
   const handleRecomendacion = async (e) => {
@@ -29,7 +30,6 @@ export default function Recomendador() {
     }
 
     try {
-      // Petición al backend
       const response = await fetch("http://localhost:3000/api/ia/recomendar", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -38,16 +38,18 @@ export default function Recomendador() {
 
       const data = await response.json();
 
-      // Manejo de respuesta
+      // Guarda el texto de la IA
       if (data.recomendacionIA) {
         setMensajeIA(data.recomendacionIA);
       } else if (data.mensaje) {
         setMensajeIA(data.mensaje);
-      } else {
-        setMensajeIA("No se recibió una respuesta válida de la IA.");
       }
 
+      // ✅ Guarda el catálogo filtrado (aunque esté vacío)
+      setCatalogoFiltrado(data.catalogoFiltrado || []);
+
       setShowModal(true);
+
     } catch (error) {
       console.error("Error al obtener la recomendación:", error);
       setMensajeIA("Ocurrió un error al conectarse con el servidor.");
@@ -154,7 +156,9 @@ export default function Recomendador() {
         visible={showModal}
         onClose={handleCloseModal}
         mensaje={mensajeIA}
+        catalogo={catalogoFiltrado}
       />
+
     </>
   );
 }

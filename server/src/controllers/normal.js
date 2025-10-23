@@ -1,10 +1,12 @@
 import { PerfumeHombre, PerfumeMujer } from '../models/normal.js';
 
+
 const registry = {
   hombre: PerfumeHombre,
   mujer:  PerfumeMujer
 };
 
+// Difiere el modelo según el catálogo solicitado (página html dónde está el usuario)
 function pickModel(catalogo) {
   const Model = registry[catalogo];
   if (!Model) {
@@ -15,7 +17,7 @@ function pickModel(catalogo) {
   return Model;
 }
 
-// GET /api/catalogo/:catalogo  (?ultimos=10 opcional)
+// Endpoint para listar catálogo diseñador hombre o mujer
 export const listarCatalogo = async (req, res) => {
   try {
     const Model = pickModel(req.params.catalogo);
@@ -42,7 +44,7 @@ export const listarCatalogo = async (req, res) => {
   }
 };
 
-// GET /api/catalogo/:catalogo/:numero
+// GET por número específico (útil para pruebas internas)
 export const obtenerPorNumero = async (req, res) => {
   try {
     const Model = pickModel(req.params.catalogo);

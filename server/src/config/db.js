@@ -1,3 +1,4 @@
+//Archivo de configuración de la base de datos
 import mongoose from 'mongoose';
 
 export async function connectDB(uri) {

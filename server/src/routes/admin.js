@@ -1,4 +1,3 @@
-// src/routes/admin.js
 import { Router } from "express";
 import { requireAuth } from "../util/auth.js";
 import { crearPerfume, editarPerfume, borrarPerfume } from "../controllers/adminCatalogo.js";

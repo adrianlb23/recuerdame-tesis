@@ -1,6 +1,6 @@
 import { PerfumeNicho } from '../models/nicho.js';
 
-// GET /api/catalogo/nicho
+// Endpoint para listar catálogo de nicho
 export const listarCatalogo = async (req, res) => {
   try {
     let consulta = PerfumeNicho.find({}).sort({ numero: 1 });
@@ -33,7 +33,7 @@ export const listarCatalogo = async (req, res) => {
   }
 };
 
-// GET /api/catalogo/nicho/:numero
+// GET por número específico (útil para pruebas internas)
 export const obtenerPorNumero = async (req, res) => {
   try {
     const numero = Number(req.params.numero);

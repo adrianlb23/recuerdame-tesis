@@ -1,4 +1,3 @@
-// controllers/adminCatalogo.js
 import { PerfumeHombre, PerfumeMujer } from "../models/normal.js";
 import { PerfumeNicho } from "../models/nicho.js";
 
@@ -18,7 +17,7 @@ const FIELDS = {
   ],
 };
 
-// Enums para Nicho (según tu front)
+// Posibles valores para campos selectivos de Nicho
 const ENUMS_NICHO = {
   genero: ["hombre", "mujer", "unisex"],
   ocasion: ["diario", "formal", "citas", "fiestas"],
@@ -26,6 +25,7 @@ const ENUMS_NICHO = {
   clima: ["frio", "calor", "versatil"],
 };
 
+//Función para seleccionar el modelo según el catálogo
 function pickModel(catalogo) {
   const Model = registry[catalogo];
   if (!Model) {
@@ -41,23 +41,20 @@ function sanitize(catalogo, obj = {}) {
   return Object.fromEntries(Object.entries(obj).filter(([k]) => allow.includes(k)));
 }
 
-// Normaliza y valida payload de Nicho
+//Función para normalizar y validar campos específicos de Nicho
 function normalizeNicho(payload) {
   const out = { ...payload };
 
-  // normalizar strings a lower/trim donde aplica
   if (out.genero) out.genero = String(out.genero).toLowerCase().trim();
   if (out.clima)  out.clima  = String(out.clima).toLowerCase().trim();
   if (out.edad)   out.edad   = String(out.edad).toLowerCase().trim();
 
-  // ocasion: forzar array de strings, normalizados, únicos y válidos
   if (out.ocasion !== undefined) {
     const arr = Array.isArray(out.ocasion) ? out.ocasion : [out.ocasion];
     const norm = [...new Set(arr.map(v => String(v).toLowerCase().trim()))];
     out.ocasion = norm.filter(v => ENUMS_NICHO.ocasion.includes(v));
   }
 
-  // validar enums si existen
   if (out.genero && !ENUMS_NICHO.genero.includes(out.genero)) {
     throwObject(400, "género inválido");
   }
@@ -77,28 +74,25 @@ function throwObject(status, message) {
   throw e;
 }
 
+//Controlador para crear perfume
 export const crearPerfume = async (req, res) => {
   try {
     const { catalogo } = req.params;
     const Model = pickModel(catalogo);
 
-    // Validar campos permitidos y requeridos
     let payload = sanitize(catalogo, req.body);
     if (payload.numero == null) return res.status(400).json({ status: "error", mensaje: "numero es requerido" });
     payload.numero = Number(payload.numero);
 
     if (catalogo === "nicho") payload = normalizeNicho(payload);
 
-    // Retornar error si ya existe ese número
     const existe = await Model.findOne({ numero: payload.numero }).lean();
     if (existe) return res.status(409).json({ status: "error", mensaje: "Ya existe ese número" });
 
-    // Crear el documento con el perfume
     const doc = await Model.create(payload);
     return res.status(201).json({ status: "éxito", resultado: doc });
   } catch (e) {
     console.error(e);
-    // Manejar error 11000 de Mongo (duplicado)
     if (e?.code === 11000) {
       return res.status(409).json({ status: "error", mensaje: "Duplicado: número ya existe" });
     }
@@ -106,6 +100,7 @@ export const crearPerfume = async (req, res) => {
   }
 };
 
+//Controlador para editar perfume
 export const editarPerfume = async (req, res) => {
   try {
     const { catalogo } = req.params;
@@ -131,6 +126,7 @@ export const editarPerfume = async (req, res) => {
   }
 };
 
+//Controlador para borrar perfume utilizando el número
 export const borrarPerfume = async (req, res) => {
   try {
     const Model = pickModel(req.params.catalogo);
