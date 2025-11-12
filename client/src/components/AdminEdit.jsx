@@ -3,6 +3,8 @@ import { FaTimes } from "react-icons/fa";
 import api from "../services/api";
 import "../styles/AdminForms.css";
 
+
+//Definir selects
 const ENUMS = {
   genero: ["hombre", "mujer", "unisex"],
   ocasion: ["diario", "formal", "citas", "fiestas"],

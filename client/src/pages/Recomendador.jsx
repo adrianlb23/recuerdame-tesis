@@ -1,11 +1,11 @@
 import { useState } from "react";
 import "../styles/Recomendador.css";
-import ModalRecomendacion from "../components/ModalRecomendacion"; // Asegúrate de tener el componente creado
+import ModalRecomendacion from "../components/ModalRecomendacion";
 
+// Estados para manejar IA, modal y carga
 export default function Recomendador() {
-  // Estados para manejar IA, modal y carga
   const [mensajeIA, setMensajeIA] = useState("");
-  const [catalogoFiltrado, setCatalogoFiltrado] = useState([]); // ✅ nuevo estado
+  const [catalogoFiltrado, setCatalogoFiltrado] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   
@@ -45,7 +45,7 @@ export default function Recomendador() {
         setMensajeIA(data.mensaje);
       }
 
-      // ✅ Guarda el catálogo filtrado (aunque esté vacío)
+      // Guarda el catálogo filtrado (aunque esté vacío)
       setCatalogoFiltrado(data.catalogoFiltrado || []);
 
       setShowModal(true);

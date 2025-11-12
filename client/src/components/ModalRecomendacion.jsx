@@ -5,7 +5,6 @@ export default function ModalRecomendacion({ visible, onClose, mensaje, catalogo
   if (!visible) return null;
 
   // Buscar el perfume en el catálogo por coincidencia directa del nombre
-  // Ejemplo de texto IA: "La fragancia ideal para tu caso es Irish Leather - Memo París..."
   const perfumeCoincidente = catalogo.find((p) =>
     mensaje.includes(p.nombre)
   );
