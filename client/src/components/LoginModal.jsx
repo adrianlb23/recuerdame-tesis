@@ -19,7 +19,7 @@ export default function LoginModal({ open, onClose, onSuccess }) {
       const token = data?.token;
       if (!token) throw new Error("Respuesta inválida del servidor");
 
-      localStorage.setItem("token", token);
+      sessionStorage.setItem("token", token);
       api.defaults.headers.common.Authorization = `Bearer ${token}`;
 
       onSuccess?.({ email });
@@ -41,10 +41,17 @@ export default function LoginModal({ open, onClose, onSuccess }) {
 
   return (
     <div className="modal-backdrop" onClick={close} aria-hidden>
-      <div className="modal-card" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true">
+      <div
+        className="modal-card"
+        onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+      >
         <div className="modal-header">
           <h3>Inicio de sesión (Admin)</h3>
-          <button className="modal-close" onClick={close} aria-label="Cerrar">×</button>
+          <button className="modal-close" onClick={close} aria-label="Cerrar">
+            ×
+          </button>
         </div>
 
         <form className="modal-body" onSubmit={handleSubmit}>

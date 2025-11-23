@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaInstagram, FaSignOutAlt, FaSignInAlt } from "react-icons/fa";
+import {
+  FaPhoneAlt,
+  FaEnvelope,
+  FaMapMarkerAlt,
+  FaInstagram,
+  FaSignOutAlt,
+  FaSignInAlt,
+} from "react-icons/fa";
 import api from "../services/api";
 import LoginModal from "./LoginModal";
 import "../styles/Footer.css";
@@ -9,12 +16,15 @@ export default function Footer() {
   const [openLogin, setOpenLogin] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsAuth(Boolean(token));
+    const token = sessionStorage.getItem("token"); // ⬅️ antes: localStorage
+    if (token) {
+      setIsAuth(true);
+      api.defaults.headers.common.Authorization = `Bearer ${token}`;
+    }
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    sessionStorage.removeItem("token"); // ⬅️ antes: localStorage
     delete api.defaults.headers.common.Authorization;
     window.location.reload();
   };
@@ -29,10 +39,12 @@ export default function Footer() {
               <FaPhoneAlt className="icon" aria-hidden="true" /> +56 9 6547 2295
             </p>
             <p>
-              <FaEnvelope className="icon" aria-hidden="true" /> perfumesrecuerdame@gmail.com
+              <FaEnvelope className="icon" aria-hidden="true" />{" "}
+              perfumesrecuerdame@gmail.com
             </p>
             <p>
-              <FaMapMarkerAlt className="icon" aria-hidden="true" /> Persa Víctor Manuel: Galería La Curtiembre
+              <FaMapMarkerAlt className="icon" aria-hidden="true" /> Persa
+              Víctor Manuel: Galería La Curtiembre
             </p>
           </div>
 
@@ -50,7 +62,6 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Sección de autenticación en el footer */}
           <div className="footer-section">
             <h4>Cuenta</h4>
             <div className="auth-section">
@@ -84,7 +95,6 @@ export default function Footer() {
         </div>
       </footer>
 
-      {/* Modal de login */}
       <LoginModal
         open={openLogin}
         onClose={() => setOpenLogin(false)}

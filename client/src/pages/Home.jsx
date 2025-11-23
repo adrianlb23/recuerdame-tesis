@@ -79,41 +79,46 @@ export default function Home() {
       </main>
       <section id="top-sellers" className="top-sellers">
         <h2>Top Ventas</h2>
+
         <div className="contenedor-top-sellers">
           <div className="perfume-card">
             <h3>Scandal Absolu</h3>
             <p className="marca">Jean Paul Gaultier</p>
             <p className="catalogo-numero">Hombre N°81</p>
-            <a href="../catalogos/hombre.html" className="ver-catalogo-btn">
+            <Link to="/hombre" className="ver-catalogo-btn">
               Ver en catálogo
-            </a>
+            </Link>
           </div>
+
           <div className="perfume-card">
             <h3>Good Girl</h3>
             <p className="marca">Carolina Herrera</p>
             <p className="catalogo-numero">Mujer N°61</p>
-            <a href="../catalogos/mujer.html" className="ver-catalogo-btn">
+            <Link to="/mujer" className="ver-catalogo-btn">
               Ver en catálogo
-            </a>
+            </Link>
           </div>
+
           <div className="perfume-card">
             <h3>Y. B. Marshmallow</h3>
             <p className="marca">Kayali</p>
             <p className="catalogo-numero">Nicho N°135</p>
-            <a href="../catalogos/nicho.html" className="ver-catalogo-btn">
+            <Link to="/nicho" className="ver-catalogo-btn">
               Ver en catálogo
-            </a>
+            </Link>
           </div>
+
           <div className="perfume-card">
             <h3>Althair</h3>
             <p className="marca">Parfums de Marly</p>
             <p className="catalogo-numero">Nicho N°48</p>
-            <a href="../catalogos/nicho.html" className="ver-catalogo-btn">
+            <Link to="/nicho" className="ver-catalogo-btn">
               Ver en catálogo
-            </a>
+            </Link>
           </div>
         </div>
       </section>
+
       <section className="about-map-section">
         <div className="content-wrapper">
           <div className="about-us">
