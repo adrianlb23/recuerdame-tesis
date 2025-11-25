@@ -12,6 +12,9 @@ import Precios from "./pages/Precios";
 import Promociones from "./pages/Promociones";
 import Recomendador from "./pages/Recomendador";
 
+console.log("API_URL:", import.meta.env.VITE_API_URL);
+
+
 export default function App() {
   return (
     <>

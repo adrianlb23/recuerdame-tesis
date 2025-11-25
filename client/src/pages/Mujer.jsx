@@ -22,7 +22,7 @@ export default function Mujer() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const token = localStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
         if (!token) return setIsAuth(false);
         api.defaults.headers.common.Authorization = `Bearer ${token}`;
         await api.get("/api/auth/me");

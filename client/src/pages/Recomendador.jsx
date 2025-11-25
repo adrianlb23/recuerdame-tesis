@@ -2,6 +2,8 @@ import { useState } from "react";
 import "../styles/Recomendador.css";
 import ModalRecomendacion from "../components/ModalRecomendacion";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 // Estados para manejar IA, modal y carga
 export default function Recomendador() {
   const [mensajeIA, setMensajeIA] = useState("");
@@ -30,7 +32,7 @@ export default function Recomendador() {
     }
 
     try {
-      const response = await fetch("http://localhost:3000/api/ia/recomendar", {
+      const response = await fetch(`${API_URL}/api/ia/recomendar`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ genero, ocasion, clima, edad, prompt }),

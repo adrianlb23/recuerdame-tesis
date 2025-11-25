@@ -4,12 +4,32 @@ import "../styles/ModalRecomendacion.css";
 export default function ModalRecomendacion({ visible, onClose, mensaje, catalogo = [] }) {
   if (!visible) return null;
 
-  // Buscar el perfume en el catálogo por coincidencia directa del nombre
+  // Buscar el perfume coincidente por nombre dentro del mensaje
   const perfumeCoincidente = catalogo.find((p) =>
-    mensaje.includes(p.nombre)
+    mensaje?.toLowerCase().includes(p.nombre.toLowerCase())
   );
 
   const urlPerfume = perfumeCoincidente?.url;
+
+  // Formatear el mensaje para poner "Nombre - Marca" en negrita
+  let mensajeFormateado = mensaje;
+
+  if (perfumeCoincidente) {
+    const etiqueta = `${perfumeCoincidente.nombre} - ${perfumeCoincidente.marca}`;
+    // Si la IA no pone el " - Marca", igual intentamos con solo el nombre
+    const posiblesFrases = [
+      etiqueta,
+      perfumeCoincidente.nombre, // fallback
+    ];
+
+    for (const frase of posiblesFrases) {
+      if (mensajeFormateado.includes(frase)) {
+        const resaltado = `<strong>${frase}</strong>`;
+        mensajeFormateado = mensajeFormateado.replace(frase, resaltado);
+        break;
+      }
+    }
+  }
 
   return (
     <div className="modal-overlay">
@@ -20,7 +40,10 @@ export default function ModalRecomendacion({ visible, onClose, mensaje, catalogo
           <span className="sparkle-icon">✨</span> Asistente Recuerdín
         </h2>
 
-        <p className="modal-text">{mensaje}</p>
+        <p
+          className="modal-text"
+          dangerouslySetInnerHTML={{ __html: mensajeFormateado }}
+        />
 
         {urlPerfume ? (
           <a

@@ -12,9 +12,21 @@ import iaRoutes from "./routes/ia.js";
 
 const app = express();
 
-// Uso de dependencias
-app.use(helmet());
-app.use(cors());
+// Seguridad (Helmet con ajustes para permitir CORS y front)
+app.use(helmet({
+  crossOriginResourcePolicy: false,
+}));
+
+// CORS: Luego cambia esto por tu dominio Netlify
+app.use(
+  cors({
+    origin: "*", // → Cuando tengas tu URL de Netlify cambia: "https://tusitio.netlify.app"
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+  })
+);
+
+// Middlewares básicos
 app.use(express.json());
 app.use(morgan('dev'));
 

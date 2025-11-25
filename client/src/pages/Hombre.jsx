@@ -24,7 +24,7 @@ export default function Hombre() {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const token = localStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
         if (!token) return setIsAuth(false);
         api.defaults.headers.common.Authorization = `Bearer ${token}`;
         await api.get("/api/auth/me");
@@ -191,7 +191,7 @@ export default function Hombre() {
         <p style={{ textAlign: "center" }}>No hay perfumes para mostrar.</p>
       )}
 
-      {/* 🔐 Admin: Agregar */}
+      {/* Admin: Agregar */}
       {isAuth && (
         <div className="admin-toolbar">
           <button className="admin-add-btn" type="button" onClick={handleAddOpen}>
